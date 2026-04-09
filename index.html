@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EatRight — AI Calorie Counter</title>
+  <meta name="description" content="Simply photograph your food — our AI handles the rest. Track calories, protein, carbs and fat instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080810;
+      --bg2: #0e0e1a;
+      --green: #7ec67a;
+      --green2: #a8e6a3;
+      --purple: #8b7cf6;
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f0f8;
+      --muted: rgba(255,255,255,0.5);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(8,8,16,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--green), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: #fff;
+    }
+    .nav-logo-text { font-size: 20px; font-weight: 800; color: #fff; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+
+    /* Lang switcher */
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 12px; font-weight: 700; color: var(--muted);
+      padding: 4px 8px; border-radius: 6px;
+      transition: color .2s, background .2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .lang-btn:hover { color: #fff; }
+    .lang-btn.active { color: var(--green); background: rgba(126,198,122,0.1); }
+    .lang-sep { color: var(--border); font-size: 12px; }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--green), #4db84a);
+      color: #0a1a0a; font-weight: 700; font-size: 14px;
+      padding: 10px 22px; border-radius: 50px; text-decoration: none;
+      transition: opacity .2s; white-space: nowrap;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(126,198,122,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(126,198,122,0.1); border: 1px solid rgba(126,198,122,0.25);
+      border-radius: 50px; padding: 7px 16px; font-size: 13px; font-weight: 600;
+      color: var(--green); margin-bottom: 28px; white-space: nowrap;
+    }
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -2px; margin-bottom: 24px;
+      max-width: 780px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--green), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--muted); max-width: 520px;
+      line-height: 1.7; margin-bottom: 44px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-bottom: 72px; }
+    .btn-store {
+      display: flex; align-items: center; gap: 12px;
+      background: #fff; color: #000;
+      padding: 14px 24px; border-radius: 16px;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+    }
+    .btn-store:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .btn-store svg { width: 24px; height: 24px; }
+    .btn-store-text { text-align: left; }
+    .btn-store-text small { font-size: 11px; opacity: 0.6; display: block; }
+    .btn-store-text strong { font-size: 16px; font-weight: 700; }
+    .btn-store.dark { background: #1a1a2e; color: #fff; border: 1px solid var(--border); }
+
+    /* phones mockup */
+    .hero-phones {
+      position: relative; width: 100%; max-width: 360px; height: 500px; margin: 0 auto;
+    }
+    .phone-frame {
+      position: absolute;
+      width: 200px; border-radius: 36px;
+      background: #111; border: 2px solid #222;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+    }
+    .phone-frame img { width: 100%; display: block; }
+    .phone-main { width: 220px; top: 0; left: 50%; transform: translateX(-50%); z-index: 3; }
+    .phone-left  { width: 180px; top: 40px; left: 0; z-index: 2; opacity: 0.7; transform: rotate(-8deg); }
+    .phone-right { width: 180px; top: 40px; right: 0; z-index: 2; opacity: 0.7; transform: rotate(8deg); }
+
+    .phone-screen {
+      width: 100%; padding-bottom: 216%;
+      background: linear-gradient(160deg, #0e0e1a 0%, #1a1a2e 100%);
+      position: relative; overflow: hidden;
+    }
+    .phone-screen-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; padding: 24px 16px;
+    }
+    .ps-logo { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 16px; }
+    .ps-ring {
+      width: 100px; height: 100px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.1);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .ps-ring-num { font-size: 28px; font-weight: 800; color: #fff; }
+    .ps-ring-lbl { font-size: 8px; color: rgba(255,255,255,0.5); text-align: center; }
+    .ps-macros { display: flex; gap: 6px; width: 100%; }
+    .ps-macro { flex: 1; background: rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 6px; }
+    .ps-macro-icon { font-size: 14px; margin-bottom: 4px; }
+    .ps-macro-val { font-size: 11px; font-weight: 700; color: #fff; }
+    .ps-macro-lbl { font-size: 8px; color: rgba(255,255,255,0.4); }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex; justify-content: center; gap: 48px;
+      flex-wrap: wrap; padding: 60px 24px;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 42px; font-weight: 900; background: linear-gradient(135deg, var(--green), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-lbl { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+    /* ── FEATURES ── */
+    .section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-tag { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
+    .section-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.15; letter-spacing: -1px; margin-bottom: 16px; }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 480px; line-height: 1.7; margin-bottom: 56px; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .feature-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 32px;
+      transition: transform .3s, border-color .3s;
+    }
+    .feature-card:hover { transform: translateY(-4px); border-color: rgba(126,198,122,0.3); }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(126,198,122,0.15), rgba(139,124,246,0.15));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 20px;
+    }
+    .feature-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; position: relative; }
+    .how-grid::before {
+      content: '';
+      position: absolute; top: 32px; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0.3;
+    }
+    .how-step { text-align: center; padding: 24px 20px; }
+    .how-num {
+      width: 64px; height: 64px; border-radius: 20px; margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--green), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 900; color: #fff;
+      position: relative; z-index: 1;
+    }
+    .how-step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .how-step p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── DOWNLOAD ── */
+    .download {
+      padding: 120px 24px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .download::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(139,124,246,0.08) 0%, transparent 70%);
+    }
+    .download h2 { font-size: clamp(32px, 5vw, 60px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; }
+    .download p { font-size: 18px; color: var(--muted); margin-bottom: 44px; }
+    .download-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px; display: flex;
+      align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    footer .foot-logo { font-size: 18px; font-weight: 800; color: #fff; }
+    footer p { font-size: 13px; color: var(--muted); }
+    footer nav { display: flex; gap: 24px; position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
+    footer nav a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+    footer nav a:hover { color: #fff; }
+
+    /* ── SUPPORT CHAT BUTTON ── */
+    .support-btn {
+      position: fixed; bottom: 28px; left: 28px; z-index: 999;
+      display: flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--green), #4db84a);
+      color: #0a1a0a; font-weight: 700; font-size: 13px;
+      padding: 12px 20px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 8px 32px rgba(126,198,122,0.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .support-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(126,198,122,0.5); }
+    .support-btn svg { width: 20px; height: 20px; fill: #0a1a0a; flex-shrink: 0; }
+    @media (max-width: 480px) {
+      .support-btn span { display: none; }
+      .support-btn { padding: 14px; border-radius: 50%; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .section { padding: 72px 20px; }
+      .stats { gap: 32px; }
+      footer { flex-direction: column; text-align: center; padding: 32px 20px; }
+      .how-grid::before { display: none; }
+    }
+    @media (max-width: 480px) {
+      .lang-btn { padding: 4px 6px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">ER</div>
+    <span class="nav-logo-text">EatRight</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features" data-i18n="nav_features">Features</a></li>
+    <li><a href="#how" data-i18n="nav_how">How it works</a></li>
+    <li><a href="#download" data-i18n="nav_download">Download</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="uz" onclick="setLang('uz')">UZ</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#download" class="nav-cta" data-i18n="nav_cta">Get the app</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span></span> <span data-i18n="badge">AI-Powered Nutrition Tracking</span>
+  </div>
+  <h1><span data-i18n="h1_1">Eat smart.</span><br /><span class="grad" data-i18n="h1_2">Track effortlessly.</span></h1>
+  <p data-i18n="hero_p">Simply photograph your food — our AI instantly identifies it and calculates calories, protein, carbs, and fat. No manual entry. Ever.</p>
+
+  <div class="hero-btns">
+    <a href="#download" class="btn-store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div class="btn-store-text">
+        <small data-i18n="store_ios_small">Download on the</small>
+        <strong>App Store</strong>
+      </div>
+    </a>
+    <a href="#download" class="btn-store dark">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.22.97.15l12.04-6.95-2.55-2.55-10.46 9.35zm-1.9-20.1C1.1 4 1 4.37 1 4.75v14.5c0 .38.1.75.28 1.09l.09.08 8.13-8.13v-.19L1.37 3.57l-.09.09zm17.54 8.42l-2.29-1.32-2.85 2.85 2.85 2.85 2.31-1.33c.66-.38.66-1.67-.02-2.05zM4.15.24L16.19 7.2l-2.55 2.55L3.18.4C3.5.33 3.85.07 4.15.24z"/></svg>
+      <div class="btn-store-text">
+        <small data-i18n="store_and_small">Get it on</small>
+        <strong>Google Play</strong>
+      </div>
+    </a>
+  </div>
+
+  <!-- Phone mockup -->
+  <div class="hero-phones">
+    <div class="phone-frame phone-left">
+      <div class="phone-screen">
+        <div class="phone-screen-inner">
+          <div class="ps-logo">EatRight</div>
+          <div style="width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:12px;">
+            <span style="font-size:22px;font-weight:800;color:#fff;">2229</span>
+            <span style="font-size:7px;color:rgba(255,255,255,0.4);text-align:center;" data-i18n="ps_remaining">Remaining</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-frame phone-main">
+      <div class="phone-screen">
+        <div class="phone-screen-inner">
+          <div class="ps-logo">EatRight</div>
+          <div class="ps-ring">
+            <div class="ps-ring-num">2229</div>
+            <div class="ps-ring-lbl" data-i18n="ps_remaining_cal">Remaining<br/>calories</div>
+          </div>
+          <div class="ps-macros">
+            <div class="ps-macro">
+              <div class="ps-macro-icon">🥩</div>
+              <div class="ps-macro-val">169g</div>
+              <div class="ps-macro-lbl" data-i18n="macro_protein">Protein</div>
+            </div>
+            <div class="ps-macro">
+              <div class="ps-macro-icon">🌾</div>
+              <div class="ps-macro-val">208g</div>
+              <div class="ps-macro-lbl" data-i18n="macro_carbs">Carbs</div>
+            </div>
+            <div class="ps-macro">
+              <div class="ps-macro-icon">🍐</div>
+              <div class="ps-macro-val">80g</div>
+              <div class="ps-macro-lbl" data-i18n="macro_fats">Fats</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-frame phone-right">
+      <div class="phone-screen">
+        <div class="phone-screen-inner">
+          <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;" data-i18n="ps_nutrition">Nutrition</div>
+          <div style="width:100%;height:70px;background:linear-gradient(135deg,#1a2a1a,#2a1a3a);border-radius:12px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:11px;color:rgba(255,255,255,0.6);" data-i18n="ps_food">Palov</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:8px;">
+              <div style="font-size:10px;">🔥</div>
+              <div style="font-size:13px;font-weight:800;color:#fff;">480</div>
+              <div style="font-size:7px;color:rgba(255,255,255,0.4);" data-i18n="ps_cal">CALORIES</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:8px;">
+              <div style="font-size:10px;">🥩</div>
+              <div style="font-size:13px;font-weight:800;color:#fff;">18g</div>
+              <div style="font-size:7px;color:rgba(255,255,255,0.4);" data-i18n="ps_prot">PROTEIN</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">10K+</div>
+    <div class="stat-lbl" data-i18n="stat_users">Active users</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">500K+</div>
+    <div class="stat-lbl" data-i18n="stat_meals">Meals scanned</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">98%</div>
+    <div class="stat-lbl" data-i18n="stat_accuracy">AI accuracy</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3s</div>
+    <div class="stat-lbl" data-i18n="stat_time">Average scan time</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-tag" data-i18n="feat_tag">Features</div>
+  <h2 class="section-title" data-i18n="feat_title">Everything you need<br />to eat right</h2>
+  <p class="section-sub" data-i18n="feat_sub">Powerful tools that make nutrition tracking feel effortless — not like a chore.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📷</div>
+      <h3 data-i18n="f1_title">Instant Photo Scan</h3>
+      <p data-i18n="f1_p">Point your camera at any meal. Our AI identifies food and calculates full nutritional breakdown in under 3 seconds.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✍️</div>
+      <h3 data-i18n="f2_title">Text Analysis</h3>
+      <p data-i18n="f2_p">Describe your meal in words and let AI calculate the nutrition. Perfect when you can't take a photo.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3 data-i18n="f3_title">Personal Goals</h3>
+      <p data-i18n="f3_p">Set your weight, calories, and macro goals. EatRight tracks your daily progress and keeps you on target.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3 data-i18n="f4_title">Macro Tracking</h3>
+      <p data-i18n="f4_p">Monitor protein, carbs, and fat alongside calories. See exactly what you're eating at a glance every day.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">❤️</div>
+      <h3 data-i18n="f5_title">Health Score</h3>
+      <p data-i18n="f5_p">Every meal gets a health score from 1-10. Instantly know if your food choices are moving you toward your goals.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3 data-i18n="f6_title">3 Languages</h3>
+      <p data-i18n="f6_p">Fully available in Uzbek, Russian, and English. EatRight speaks your language.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="section" id="how">
+    <div class="section-tag" data-i18n="how_tag">How it works</div>
+    <h2 class="section-title" data-i18n="how_title">Three steps to<br />better nutrition</h2>
+    <p class="section-sub" data-i18n="how_sub">No complicated setup. Start tracking in seconds.</p>
+
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h3 data-i18n="step1_title">Take a photo</h3>
+        <p data-i18n="step1_p">Open EatRight, tap the + button, and photograph your meal. Gallery and text entry also supported.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h3 data-i18n="step2_title">AI analyzes</h3>
+        <p data-i18n="step2_p">Our AI identifies every ingredient and calculates calories, protein, carbs, and fat instantly.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h3 data-i18n="step3_title">Track progress</h3>
+        <p data-i18n="step3_p">Results are saved to your daily log. Watch your progress toward your calorie and macro goals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="download" id="download">
+  <h2><span data-i18n="dl_title1">Start eating right</span><br /><span style="background:linear-gradient(135deg,var(--green),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-i18n="dl_title2">today. For free.</span></h2>
+  <p data-i18n="dl_p">Available on iOS and Android. No subscription required to get started.</p>
+  <div class="download-btns">
+    <a href="#" class="btn-store" style="font-size:15px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div class="btn-store-text">
+        <small data-i18n="store_ios_small">Download on the</small>
+        <strong>App Store</strong>
+      </div>
+    </a>
+    <a href="#" class="btn-store dark" style="font-size:15px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.22.97.15l12.04-6.95-2.55-2.55-10.46 9.35zm-1.9-20.1C1.1 4 1 4.37 1 4.75v14.5c0 .38.1.75.28 1.09l.09.08 8.13-8.13v-.19L1.37 3.57l-.09.09zm17.54 8.42l-2.29-1.32-2.85 2.85 2.85 2.85 2.31-1.33c.66-.38.66-1.67-.02-2.05zM4.15.24L16.19 7.2l-2.55 2.55L3.18.4C3.5.33 3.85.07 4.15.24z"/></svg>
+      <div class="btn-store-text">
+        <small data-i18n="store_and_small">Get it on</small>
+        <strong>Google Play</strong>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">EatRight</div>
+  <p>© 2025 EatRight. All rights reserved.</p>
+  <nav>
+    <a id="privacyLink" href="https://eatright-server-production.up.railway.app/privacy?lang=en" target="_blank" data-i18n="footer_privacy">Privacy</a>
+    <a id="termsLink" href="https://eatright-server-production.up.railway.app/privacy?lang=en" target="_blank" data-i18n="footer_terms">Terms</a>
+    <a href="mailto:yuldoshev1026460@gmail.com" data-i18n="footer_contact">Contact</a>
+  </nav>
+</footer>
+
+<!-- SUPPORT CHAT -->
+<a href="https://t.me/eatright_support_bot" target="_blank" class="support-btn">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.93c-.12.56-.46.7-.93.43l-2.57-1.89-1.24 1.19c-.14.14-.26.26-.52.26l.18-2.62 4.74-4.28c.2-.18-.04-.28-.32-.1L7.46 14.9l-2.52-.79c-.55-.17-.56-.55.12-.81l9.84-3.8c.46-.17.86.11.74.8z"/>
+  </svg>
+  <span>Support</span>
+</a>
+
+<script>
+  const t = {
+    en: {
+      nav_features: "Features", nav_how: "How it works", nav_download: "Download", nav_cta: "Get the app",
+      badge: "AI-Powered Nutrition Tracking",
+      h1_1: "Eat smart.", h1_2: "Track effortlessly.",
+      hero_p: "Simply photograph your food — our AI instantly identifies it and calculates calories, protein, carbs, and fat. No manual entry. Ever.",
+      store_ios_small: "Download on the", store_and_small: "Get it on",
+      ps_remaining: "Remaining", ps_remaining_cal: "Remaining\ncalories", ps_nutrition: "Nutrition", ps_food: "Palov", ps_cal: "CALORIES", ps_prot: "PROTEIN",
+      macro_protein: "Protein", macro_carbs: "Carbs", macro_fats: "Fats",
+      stat_users: "Active users", stat_meals: "Meals scanned", stat_accuracy: "AI accuracy", stat_time: "Average scan time",
+      feat_tag: "Features", feat_title: "Everything you need\nto eat right", feat_sub: "Powerful tools that make nutrition tracking feel effortless — not like a chore.",
+      f1_title: "Instant Photo Scan", f1_p: "Point your camera at any meal. Our AI identifies food and calculates full nutritional breakdown in under 3 seconds.",
+      f2_title: "Text Analysis", f2_p: "Describe your meal in words and let AI calculate the nutrition. Perfect when you can't take a photo.",
+      f3_title: "Personal Goals", f3_p: "Set your weight, calories, and macro goals. EatRight tracks your daily progress and keeps you on target.",
+      f4_title: "Macro Tracking", f4_p: "Monitor protein, carbs, and fat alongside calories. See exactly what you're eating at a glance every day.",
+      f5_title: "Health Score", f5_p: "Every meal gets a health score from 1-10. Instantly know if your food choices are moving you toward your goals.",
+      f6_title: "3 Languages", f6_p: "Fully available in Uzbek, Russian, and English. EatRight speaks your language.",
+      how_tag: "How it works", how_title: "Three steps to\nbetter nutrition", how_sub: "No complicated setup. Start tracking in seconds.",
+      step1_title: "Take a photo", step1_p: "Open EatRight, tap the + button, and photograph your meal. Gallery and text entry also supported.",
+      step2_title: "AI analyzes", step2_p: "Our AI identifies every ingredient and calculates calories, protein, carbs, and fat instantly.",
+      step3_title: "Track progress", step3_p: "Results are saved to your daily log. Watch your progress toward your calorie and macro goals.",
+      dl_title1: "Start eating right", dl_title2: "today. For free.",
+      dl_p: "Available on iOS and Android. No subscription required to get started.",
+      footer_privacy: "Privacy", footer_terms: "Terms", footer_contact: "Contact"
+    },
+    uz: {
+      nav_features: "Imkoniyatlar", nav_how: "Qanday ishlaydi", nav_download: "Yuklab olish", nav_cta: "Ilovani olish",
+      badge: "AI bilan ovqat kuzatish",
+      h1_1: "Aqlli ovqat.", h1_2: "Oson nazorat.",
+      hero_p: "Ovqatingizni surating — AI bir zumda kaloriya, oqsil, uglevodlar va yog'ni hisoblab chiqadi. Qo'lda kiritish shart emas.",
+      store_ios_small: "Yuklab olish", store_and_small: "Ochish",
+      ps_remaining: "Qolgan", ps_remaining_cal: "Qolgan\nkaloriya", ps_nutrition: "Ovqat", ps_food: "Palov", ps_cal: "KALORIYA", ps_prot: "OQSIL",
+      macro_protein: "Oqsil", macro_carbs: "Uglevod", macro_fats: "Yog'",
+      stat_users: "Faol foydalanuvchilar", stat_meals: "Skanerlangan ovqatlar", stat_accuracy: "AI aniqligi", stat_time: "O'rtacha vaqt",
+      feat_tag: "Imkoniyatlar", feat_title: "Sog'lom ovqatlanish uchun\nhamma narsa", feat_sub: "Kaloriya kuzatishni osonlashtiruvchi kuchli vositalar.",
+      f1_title: "Tezkor foto skanerlash", f1_p: "Kamerangizni ovqatga yo'llang. AI 3 soniyada kaloriya va to'liq ozuqaviy ma'lumotlarni hisoblab chiqadi.",
+      f2_title: "Matn tahlili", f2_p: "Ovqatingizni so'zlar bilan tasvirlab, AI hisoblab beradi. Rasm olish imkoni bo'lmaganda juda qulay.",
+      f3_title: "Shaxsiy maqsadlar", f3_p: "Vazn, kaloriya va makro maqsadlarini belgilang. EatRight kunlik jarayonni kuzatib boradi.",
+      f4_title: "Makro kuzatish", f4_p: "Kaloriya bilan birga oqsil, uglevodlar va yog'ni kuzating. Har kuni nima yeganingizni ko'ring.",
+      f5_title: "Sog'liqlik reytingi", f5_p: "Har bir ovqat 1-10 ball bilan baholanadi. Tanlagan ovqatingiz maqsadingizga mos kelishini bilib oling.",
+      f6_title: "3 til", f6_p: "O'zbek, Rus va Ingliz tillarida to'liq mavjud. EatRight sizning tilingizda gapiradi.",
+      how_tag: "Qanday ishlaydi", how_title: "Yaxshi ovqatlanishga\n3 qadam", how_sub: "Murakkab sozlash yo'q. Sekundlar ichida boshlang.",
+      step1_title: "Rasm oling", step1_p: "EatRight ni oching, + tugmasini bosing va ovqatni surating. Galereya va matn kiritish ham qo'llab-quvvatlanadi.",
+      step2_title: "AI tahlil qiladi", step2_p: "AI har bir ingredientni aniqlaydi va kaloriya, oqsil, uglevodlar hamda yog'ni bir zumda hisoblaydi.",
+      step3_title: "Jarayonni kuzating", step3_p: "Natijalar kunlik jurnalga saqlanadi. Kaloriya va makro maqsadlaringizga erishishingizni kuzating.",
+      dl_title1: "Bugun boshlang", dl_title2: "Bepul.",
+      dl_p: "iOS va Android uchun mavjud. Boshlash uchun obuna talab qilinmaydi.",
+      footer_privacy: "Maxfiylik", footer_terms: "Shartlar", footer_contact: "Aloqa"
+    },
+    ru: {
+      nav_features: "Возможности", nav_how: "Как работает", nav_download: "Скачать", nav_cta: "Скачать",
+      badge: "ИИ-трекинг питания",
+      h1_1: "Ешь умно.", h1_2: "Следи легко.",
+      hero_p: "Просто сфотографируйте еду — наш ИИ мгновенно определит её и рассчитает калории, белки, углеводы и жиры. Никакого ручного ввода.",
+      store_ios_small: "Загрузить в", store_and_small: "Доступно в",
+      ps_remaining: "Осталось", ps_remaining_cal: "Осталось\nкалорий", ps_nutrition: "Питание", ps_food: "Плов", ps_cal: "КАЛОРИИ", ps_prot: "БЕЛКИ",
+      macro_protein: "Белки", macro_carbs: "Углеводы", macro_fats: "Жиры",
+      stat_users: "Активных пользователей", stat_meals: "Блюд отсканировано", stat_accuracy: "Точность ИИ", stat_time: "Среднее время",
+      feat_tag: "Возможности", feat_title: "Всё для\nправильного питания", feat_sub: "Мощные инструменты, которые делают трекинг питания простым и удобным.",
+      f1_title: "Быстрое сканирование", f1_p: "Наведите камеру на блюдо. ИИ определит еду и рассчитает пищевую ценность менее чем за 3 секунды.",
+      f2_title: "Текстовый анализ", f2_p: "Опишите блюдо словами и ИИ рассчитает питательную ценность. Идеально, когда нет возможности сфотографировать.",
+      f3_title: "Личные цели", f3_p: "Установите цели по весу, калориям и макронутриентам. EatRight отслеживает ваш ежедневный прогресс.",
+      f4_title: "Трекинг макросов", f4_p: "Следите за белками, углеводами и жирами. Видьте точно, что вы едите каждый день.",
+      f5_title: "Оценка здоровья", f5_p: "Каждое блюдо получает оценку от 1 до 10. Мгновенно узнайте, приближают ли вас ваши пищевые выборы к целям.",
+      f6_title: "3 языка", f6_p: "Полностью доступен на узбекском, русском и английском языках. EatRight говорит на вашем языке.",
+      how_tag: "Как работает", how_title: "Три шага к\nлучшему питанию", how_sub: "Никакой сложной настройки. Начните отслеживать за секунды.",
+      step1_title: "Сделайте фото", step1_p: "Откройте EatRight, нажмите кнопку + и сфотографируйте блюдо. Поддерживается галерея и текстовый ввод.",
+      step2_title: "ИИ анализирует", step2_p: "ИИ определяет каждый ингредиент и мгновенно рассчитывает калории, белки, углеводы и жиры.",
+      step3_title: "Следите за прогрессом", step3_p: "Результаты сохраняются в ежедневный журнал. Следите за прогрессом к целям по калориям и макросам.",
+      dl_title1: "Начните питаться правильно", dl_title2: "сегодня. Бесплатно.",
+      dl_p: "Доступно на iOS и Android. Для начала подписка не требуется.",
+      footer_privacy: "Конфиденциальность", footer_terms: "Условия", footer_contact: "Контакт"
+    }
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[lang] && t[lang][key]) {
+        el.innerHTML = t[lang][key].replace(/\n/g, '<br/>');
+      }
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.lang = lang;
+    const base = 'https://eatright-server-production.up.railway.app/privacy?lang=';
+    document.getElementById('privacyLink').href = base + lang;
+    document.getElementById('termsLink').href = base + lang;
+  }
+
+  // Init on load
+  setLang(currentLang);
+</script>
+</body>
+</html>
