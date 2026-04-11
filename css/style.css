@@ -3516,6 +3516,32 @@ body[data-theme="light"] .fcat-title{color:#0d1f2d}
 .ea-phones-wrap .ea-phone{display:none}
 
 /* =====================================================
+   SITE FOOTER
+   ===================================================== */
+.site-footer{
+  text-align:center;
+  padding:20px 16px 28px;
+  border-top:1px solid rgba(255,255,255,.06);
+  margin-top:24px;
+}
+.site-footer-links{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:4px 8px;
+  margin-bottom:10px;
+}
+.site-footer-links a{
+  font-size:.82rem;color:var(--c5);
+  text-decoration:none;opacity:.7;
+  transition:opacity .2s,color .2s;
+  padding:2px 4px;
+}
+.site-footer-links a:hover{opacity:1;color:var(--accent)}
+.sf-dot{color:var(--c5);opacity:.3;font-size:.82rem}
+.site-footer-copy{
+  font-size:.78rem;color:var(--c5);opacity:.45;
+}
+
+/* =====================================================
    SCROLL-REVEAL ANIMATIONS
    ===================================================== */
 .reveal{
