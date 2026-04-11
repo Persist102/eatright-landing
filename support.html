@@ -18,6 +18,11 @@
     header a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;font-size:1.2rem}
     .header-divider{color:var(--c5);font-size:1.1rem}
     .header-title{color:var(--c5);font-size:.9rem;font-weight:500}
+    .lang-switcher{margin-left:auto;display:flex;gap:4px;align-items:center}
+    .lang-btn{background:none;border:none;cursor:pointer;font-size:12px;font-weight:700;color:var(--c5);padding:4px 8px;border-radius:6px;transition:color .2s,background .2s;font-family:'DM Sans',sans-serif}
+    .lang-btn:hover{color:#fff}
+    .lang-btn.active{color:var(--accent);background:rgba(34,212,143,.1)}
+    .lang-sep{color:var(--c3);font-size:.9rem}
     main{max-width:760px;margin:0 auto;padding:48px 24px 80px}
     .hero{text-align:center;margin-bottom:48px}
     .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(34,212,143,.1);border:1px solid rgba(34,212,143,.3);color:var(--accent);padding:6px 14px;border-radius:100px;font-size:.8rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:20px}
@@ -31,7 +36,6 @@
     .contact-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.6rem}
     .icon-tg{background:rgba(0,136,204,.15);border:1px solid rgba(0,136,204,.3)}
     .icon-email{background:rgba(34,212,143,.1);border:1px solid rgba(34,212,143,.25)}
-    .icon-faq{background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.25)}
     .contact-card h3{font-family:'Syne',sans-serif;color:#fff;font-size:1.05rem;font-weight:700;margin-bottom:8px}
     .contact-card p{color:var(--c5);font-size:.9rem;margin-bottom:20px}
     .contact-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;text-decoration:none;font-weight:600;font-size:.9rem;transition:opacity .2s}
@@ -51,6 +55,7 @@
     .footer-links a:hover{color:var(--accent)}
     .footer-copy{color:var(--c5);font-size:.82rem;opacity:.6}
     p{color:var(--c5);font-size:.95rem;margin-bottom:12px}
+    @media(max-width:480px){main{padding:32px 16px 60px}}
   </style>
 </head>
 <body>
@@ -60,79 +65,211 @@
       EatRight
     </a>
     <span class="header-divider">/</span>
-    <span class="header-title">Qo'llab-quvvatlash</span>
+    <span class="header-title" id="headerTitle">Qo'llab-quvvatlash</span>
+    <div class="lang-switcher">
+      <button type="button" class="lang-btn active" data-lang="uz" onclick="setLang('uz')">UZ</button>
+      <span class="lang-sep">|</span>
+      <button type="button" class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+      <span class="lang-sep">|</span>
+      <button type="button" class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
   </header>
 
   <main>
     <div class="hero">
-      <div class="hero-badge">💬 Yordam</div>
-      <h1>Qanday <span>yordam</span> kerak?</h1>
-      <p class="hero-meta">Savollaringizga 24 soat ichida javob beramiz</p>
+      <div class="hero-badge" id="heroBadge">💬 Yordam</div>
+      <h1 id="heroH1">Qanday <span>yordam</span> kerak?</h1>
+      <p class="hero-meta" id="heroMeta">Savollaringizga 24 soat ichida javob beramiz</p>
     </div>
 
     <div class="info-box">
-      <p>Muammo yoki savolingiz bo'lsa, quyidagi kanallar orqali biz bilan bog'laning. Eng tezkor javob uchun Telegram'dan foydalaning.</p>
+      <p id="infoBox">Muammo yoki savolingiz bo'lsa, quyidagi kanallar orqali biz bilan bog'laning. Eng tezkor javob uchun Telegram'dan foydalaning.</p>
     </div>
 
     <div class="contact-grid">
       <div class="contact-card">
         <div class="contact-icon icon-tg">💬</div>
         <h3>Telegram</h3>
-        <p>Eng tezkor javob. Odatda 1–3 soat ichida javob beriladi.</p>
+        <p id="tgDesc">Eng tezkor javob. Odatda 1–3 soat ichida javob beriladi.</p>
         <a href="https://t.me/eatright_support_bot" class="contact-btn btn-tg" target="_blank" rel="noopener">@eatright_support_bot</a>
       </div>
       <div class="contact-card">
         <div class="contact-icon icon-email">✉️</div>
         <h3>Email</h3>
-        <p>Katta muammolar yoki hamkorlik takliflari uchun email yozing.</p>
-        <a href="mailto:support@eatright-uz.netlify.app" class="contact-btn btn-email">Email yuborish</a>
+        <p id="emailDesc">Katta muammolar yoki hamkorlik takliflari uchun email yozing.</p>
+        <a href="mailto:support@eatright-uz.netlify.app" class="contact-btn btn-email" id="emailBtn">Email yuborish</a>
       </div>
     </div>
 
     <div class="divider"></div>
 
     <div class="faq-section">
-      <h2>Ko'p so'raladigan savollar</h2>
+      <h2 id="faqTitle">Ko'p so'raladigan savollar</h2>
 
       <div class="faq-item">
-        <div class="faq-q">Ilova bepulmi?</div>
-        <div class="faq-a">Ha, EatRight to'liq bepul. Barcha asosiy funksiyalar — skanerlash, kaloriya hisoblash, kundalik — pullik emas.</div>
+        <div class="faq-q" id="faq1q">Ilova bepulmi?</div>
+        <div class="faq-a" id="faq1a">Ha, EatRight to'liq bepul. Barcha asosiy funksiyalar — skanerlash, kaloriya hisoblash, kundalik — pullik emas.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">AI kaloriyani qanday aniqlaydi?</div>
-        <div class="faq-a">Ovqat rasmini yuklasangiz, Gemini 2.0 Flash modeli ovqatni tanib, 500+ taomlik bazamizdan ma'lumot olib, taxminiy kaloriya va BJU ni hisoblaydi.</div>
+        <div class="faq-q" id="faq2q">AI kaloriyani qanday aniqlaydi?</div>
+        <div class="faq-a" id="faq2a">Ovqat rasmini yuklasangiz, Gemini 2.0 Flash modeli ovqatni tanib, 500+ taomlik bazamizdan ma'lumot olib, taxminiy kaloriya va BJU ni hisoblaydi.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Natijalar qanchalik aniq?</div>
-        <div class="faq-a">Aniqlik rasmning sifatiga bog'liq. Yaxshi yorug'lik va yaqin suratda 85–95% aniqlikka erishiladi. Bu taxminiy ko'rsatkich, tibbiy maslahat emas.</div>
+        <div class="faq-q" id="faq3q">Natijalar qanchalik aniq?</div>
+        <div class="faq-a" id="faq3a">Aniqlik rasmning sifatiga bog'liq. Yaxshi yorug'lik va yaqin suratda 85–95% aniqlikka erishiladi. Bu taxminiy ko'rsatkich, tibbiy maslahat emas.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Parolimni unutdim, nima qilaman?</div>
-        <div class="faq-a">Kirish sahifasidagi "Parolni tiklash" tugmasini bosing va email manzilingizga ko'rsatmalar yuboriladi.</div>
+        <div class="faq-q" id="faq4q">Parolimni unutdim, nima qilaman?</div>
+        <div class="faq-a" id="faq4a">Kirish sahifasidagi "Parolni tiklash" tugmasini bosing va email manzilingizga ko'rsatmalar yuboriladi.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Ma'lumotlarim xavfsizmi?</div>
-        <div class="faq-a">Ha. Barcha ma'lumotlar shifrlangan holda saqlanadi va uchinchi tomonlarga sotilmaydi. Batafsil — <a href="/privacy.html" style="color:var(--accent)">Maxfiylik Siyosati</a>.</div>
+        <div class="faq-q" id="faq5q">Ma'lumotlarim xavfsizmi?</div>
+        <div class="faq-a" id="faq5a">Ha. Barcha ma'lumotlar shifrlangan holda saqlanadi va uchinchi tomonlarga sotilmaydi. Batafsil — <a href="/privacy.html" style="color:var(--accent)" id="faq5link">Maxfiylik Siyosati</a>.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">O'zbek taomlari bazasi bormi?</div>
-        <div class="faq-a">Ha! 500+ o'zbek va rus taomlari bazamizda mavjud: palov, manti, somsa, lag'mon, shurpa va boshqalar.</div>
+        <div class="faq-q" id="faq6q">O'zbek taomlari bazasi bormi?</div>
+        <div class="faq-a" id="faq6a">Ha! 500+ o'zbek va rus taomlari bazamizda mavjud: palov, manti, somsa, lag'mon, shurpa va boshqalar.</div>
       </div>
     </div>
   </main>
 
   <div class="footer-bar">
     <div class="footer-links">
-      <a href="/privacy.html">Maxfiylik Siyosati</a>
-      <a href="/terms.html">Foydalanish Shartlari</a>
-      <a href="/support.html">Qo'llab-quvvatlash</a>
+      <a href="/privacy.html" id="footerPrivacy">Maxfiylik Siyosati</a>
+      <a href="/terms.html" id="footerTerms">Foydalanish Shartlari</a>
+      <a href="/support.html" id="footerSupport">Qo'llab-quvvatlash</a>
     </div>
-    <div class="footer-copy">&copy; 2026 EatRight. Barcha huquqlar himoyalangan.</div>
+    <div class="footer-copy" id="footerCopy">&copy; 2026 EatRight. Barcha huquqlar himoyalangan.</div>
   </div>
+
+<script>
+const T = {
+  uz: {
+    pageTitle:     "Qo'llab-quvvatlash — EatRight",
+    headerTitle:   "Qo'llab-quvvatlash",
+    heroBadge:     "💬 Yordam",
+    heroH1:        "Qanday <span>yordam</span> kerak?",
+    heroMeta:      "Savollaringizga 24 soat ichida javob beramiz",
+    infoBox:       "Muammo yoki savolingiz bo'lsa, quyidagi kanallar orqali biz bilan bog'laning. Eng tezkor javob uchun Telegram'dan foydalaning.",
+    tgDesc:        "Eng tezkor javob. Odatda 1–3 soat ichida javob beriladi.",
+    emailDesc:     "Katta muammolar yoki hamkorlik takliflari uchun email yozing.",
+    emailBtn:      "Email yuborish",
+    faqTitle:      "Ko'p so'raladigan savollar",
+    faq1q: "Ilova bepulmi?",
+    faq1a: "Ha, EatRight to'liq bepul. Barcha asosiy funksiyalar — skanerlash, kaloriya hisoblash, kundalik — pullik emas.",
+    faq2q: "AI kaloriyani qanday aniqlaydi?",
+    faq2a: "Ovqat rasmini yuklasangiz, Gemini 2.0 Flash modeli ovqatni tanib, 500+ taomlik bazamizdan ma'lumot olib, taxminiy kaloriya va BJU ni hisoblaydi.",
+    faq3q: "Natijalar qanchalik aniq?",
+    faq3a: "Aniqlik rasmning sifatiga bog'liq. Yaxshi yorug'lik va yaqin suratda 85–95% aniqlikka erishiladi. Bu taxminiy ko'rsatkich, tibbiy maslahat emas.",
+    faq4q: "Parolimni unutdim, nima qilaman?",
+    faq4a: "Kirish sahifasidagi \"Parolni tiklash\" tugmasini bosing va email manzilingizga ko'rsatmalar yuboriladi.",
+    faq5q: "Ma'lumotlarim xavfsizmi?",
+    faq5a: "Ha. Barcha ma'lumotlar shifrlangan holda saqlanadi va uchinchi tomonlarga sotilmaydi. Batafsil — ",
+    faq5link:      "Maxfiylik Siyosati",
+    faq6q: "O'zbek taomlari bazasi bormi?",
+    faq6a: "Ha! 500+ o'zbek va rus taomlari bazamizda mavjud: palov, manti, somsa, lag'mon, shurpa va boshqalar.",
+    footerPrivacy: "Maxfiylik Siyosati",
+    footerTerms:   "Foydalanish Shartlari",
+    footerSupport: "Qo'llab-quvvatlash",
+    footerCopy:    "© 2026 EatRight. Barcha huquqlar himoyalangan.",
+  },
+  ru: {
+    pageTitle:     "Поддержка — EatRight",
+    headerTitle:   "Поддержка",
+    heroBadge:     "💬 Помощь",
+    heroH1:        "Какая нужна <span>помощь</span>?",
+    heroMeta:      "Мы ответим на ваши вопросы в течение 24 часов",
+    infoBox:       "Если у вас есть проблема или вопрос, свяжитесь с нами по одному из каналов ниже. Для самого быстрого ответа используйте Telegram.",
+    tgDesc:        "Самый быстрый ответ. Обычно отвечаем в течение 1–3 часов.",
+    emailDesc:     "Для серьёзных проблем или предложений о сотрудничестве пишите на email.",
+    emailBtn:      "Написать письмо",
+    faqTitle:      "Часто задаваемые вопросы",
+    faq1q: "Приложение бесплатное?",
+    faq1a: "Да, EatRight полностью бесплатен. Все основные функции — сканирование, подсчёт калорий, дневник — бесплатны.",
+    faq2q: "Как ИИ определяет калории?",
+    faq2a: "Когда вы загружаете фото еды, модель Gemini 2.0 Flash распознаёт блюдо, берёт данные из нашей базы 500+ блюд и вычисляет приблизительные калории и БЖУ.",
+    faq3q: "Насколько точны результаты?",
+    faq3a: "Точность зависит от качества фото. При хорошем освещении и крупном плане достигается точность 85–95%. Это приблизительный показатель, не медицинская рекомендация.",
+    faq4q: "Я забыл пароль, что делать?",
+    faq4a: "Нажмите кнопку «Восстановить пароль» на странице входа — инструкции будут отправлены на ваш email.",
+    faq5q: "Мои данные в безопасности?",
+    faq5a: "Да. Все данные хранятся в зашифрованном виде и не продаются третьим лицам. Подробнее — ",
+    faq5link:      "Политика конфиденциальности",
+    faq6q: "Есть ли база узбекских блюд?",
+    faq6a: "Да! В нашей базе 500+ узбекских и русских блюд: плов, манты, самса, лагман, шурпа и многое другое.",
+    footerPrivacy: "Политика конфиденциальности",
+    footerTerms:   "Условия использования",
+    footerSupport: "Поддержка",
+    footerCopy:    "© 2026 EatRight. Все права защищены.",
+  },
+  en: {
+    pageTitle:     "Support — EatRight",
+    headerTitle:   "Support",
+    heroBadge:     "💬 Help",
+    heroH1:        "How can we <span>help</span>?",
+    heroMeta:      "We will answer your questions within 24 hours",
+    infoBox:       "If you have a problem or question, contact us through one of the channels below. For the fastest response, use Telegram.",
+    tgDesc:        "Fastest response. Usually replies within 1–3 hours.",
+    emailDesc:     "For major issues or partnership proposals, send us an email.",
+    emailBtn:      "Send Email",
+    faqTitle:      "Frequently Asked Questions",
+    faq1q: "Is the app free?",
+    faq1a: "Yes, EatRight is completely free. All core features — scanning, calorie tracking, daily log — are free of charge.",
+    faq2q: "How does AI detect calories?",
+    faq2a: "When you upload a food photo, the Gemini 2.0 Flash model recognises the dish, pulls data from our 500+ food database, and calculates approximate calories and macros.",
+    faq3q: "How accurate are the results?",
+    faq3a: "Accuracy depends on photo quality. With good lighting and a close-up shot, 85–95% accuracy is achieved. This is an estimate, not medical advice.",
+    faq4q: "I forgot my password, what should I do?",
+    faq4a: "Tap the \"Reset password\" button on the login screen and instructions will be sent to your email address.",
+    faq5q: "Is my data secure?",
+    faq5a: "Yes. All data is stored encrypted and is never sold to third parties. Learn more — ",
+    faq5link:      "Privacy Policy",
+    faq6q: "Is there a database of Uzbek dishes?",
+    faq6a: "Yes! Our database contains 500+ Uzbek and Russian dishes: plov, manti, samsa, lagman, shorpa and more.",
+    footerPrivacy: "Privacy Policy",
+    footerTerms:   "Terms of Service",
+    footerSupport: "Support",
+    footerCopy:    "© 2026 EatRight. All rights reserved.",
+  },
+};
+
+const SIMPLE_IDS = ['headerTitle','heroBadge','heroMeta','infoBox',
+  'tgDesc','emailDesc','emailBtn','faqTitle',
+  'faq1q','faq1a','faq2q','faq2a','faq3q','faq3a',
+  'faq4q','faq4a','faq6q','faq6a',
+  'footerPrivacy','footerTerms','footerSupport','footerCopy'];
+
+function setLang(lang) {
+  const t = T[lang];
+  document.title = t.pageTitle;
+  document.documentElement.lang = lang;
+  document.getElementById('heroH1').innerHTML = t.heroH1;
+
+  SIMPLE_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t[id];
+  });
+
+  // faq5 has a link inside — handle separately
+  document.getElementById('faq5q').textContent = t.faq5q;
+  const faq5a = document.getElementById('faq5a');
+  faq5a.childNodes[0].textContent = t.faq5a;
+  document.getElementById('faq5link').textContent = t.faq5link;
+
+  document.querySelectorAll('.lang-btn').forEach(btn =>
+    btn.classList.toggle('active', btn.dataset.lang === lang)
+  );
+  localStorage.setItem('supportLang', lang);
+}
+
+const saved = new URLSearchParams(location.search).get('lang')
+  || localStorage.getItem('supportLang') || 'uz';
+setLang(saved);
+</script>
 </body>
 </html>
