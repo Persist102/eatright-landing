@@ -32,11 +32,11 @@
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
   <link rel="apple-touch-startup-image" href="/icons/icon-512.png">
 
-  <!-- Figma template fonts: Raleway + Quicksand -->
+  <!-- Fonts: Syne (display) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css?v=22">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css?v=23">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -1085,6 +1085,35 @@
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
   });
+
+  // Scroll-reveal observer
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  function initReveal() {
+    document.querySelectorAll('.ea-stat, .fcat-card, .tsla-sec-content, .tsla-sec-visual, .tsla-footer-section h2, .tsla-footer-section p, .tsla-footer-section .tsla-btns').forEach((el, i) => {
+      el.classList.add('reveal');
+      if (i % 3 === 1) el.classList.add('reveal-delay-1');
+      if (i % 3 === 2) el.classList.add('reveal-delay-2');
+      revealObserver.observe(el);
+    });
+  }
+
+  // Re-init after page navigation
+  const origShowPage = window.showPage;
+  if (typeof origShowPage === 'function') {
+    window.showPage = function(page) {
+      origShowPage(page);
+      setTimeout(initReveal, 50);
+    };
+  }
+  setTimeout(initReveal, 100);
 </script>
 </body>
 </html>
