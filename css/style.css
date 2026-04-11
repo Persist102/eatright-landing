@@ -3196,14 +3196,25 @@ body[data-theme="light"] .fcat-title{color:#0d1f2d}
   /* Proporsional kichik frame elementlari */
   .iph-frame{border-radius:28px}
   .iph-screen{border-radius:25px}
-  .iph-island{width:40px;height:10px;top:5px;border-radius:6px}
-  .iph-status{padding:4px 10px 2px}
-  .iph-status-dark{padding:4px 10px 2px}
+  /* Dynamic Island yashirin — qora bo'shliq yo'q */
+  .iph-island{display:none}
+  .iph-status{padding:3px 10px 3px}
+  .iph-status-dark{padding:3px 10px 3px}
   .iph-time{font-size:8px}
   .iph-icons svg{transform:scale(0.7);transform-origin:right center}
   .iph-btn-vol-up{width:2px;height:20px}
   .iph-btn-vol-dn{width:2px;height:20px}
   .iph-btn-power{width:2px;height:30px}
+  /* Kichik ekran uchun kompakt app header */
+  .iph-app-header{padding:5px 10px 10px}
+  .iph-week-row{display:none}
+  .iph-ring-wrap{width:74px;height:74px;margin:2px auto 4px}
+  .iph-ring-wrap svg{width:74px;height:74px}
+  .iph-ring-txt b{font-size:.78rem}
+  .iph-log{padding:6px 8px}
+  .iph-food-card{padding:6px;gap:6px}
+  .iph-food-img{width:44px;height:44px}
+  .iph-bottom-nav{padding:6px 14px 10px}
   @keyframes scannerSwap{
     0%,38%{transform:rotate(-4deg) scale(0.93);z-index:1;filter:brightness(0.65) drop-shadow(0 20px 35px rgba(0,0,0,.6))}
     44%{z-index:3;transform:rotate(-4deg) scale(0.93);filter:brightness(0.65)}
@@ -3222,13 +3233,21 @@ body[data-theme="light"] .fcat-title{color:#0d1f2d}
   .iph-front{width:138px;height:290px;left:154px;top:4px}
   .iph-frame{border-radius:20px}
   .iph-screen{border-radius:17px}
-  .iph-island{width:32px;height:8px;top:4px;border-radius:5px}
-  .iph-status{padding:3px 8px 2px}
-  .iph-status-dark{padding:3px 8px 2px}
+  .iph-island{display:none}
+  .iph-status{padding:2px 8px 2px}
+  .iph-status-dark{padding:2px 8px 2px}
   .iph-time{font-size:7px}
   .iph-btn-vol-up{width:2px;height:14px}
   .iph-btn-vol-dn{width:2px;height:14px}
   .iph-btn-power{width:2px;height:20px}
+  .iph-app-header{padding:4px 8px 8px}
+  .iph-ring-wrap{width:60px;height:60px;margin:2px auto 3px}
+  .iph-ring-wrap svg{width:60px;height:60px}
+  .iph-ring-txt b{font-size:.65rem}
+  .iph-log{padding:4px 6px}
+  .iph-food-card{padding:5px;gap:5px}
+  .iph-food-img{width:36px;height:36px;border-radius:7px}
+  .iph-bottom-nav{padding:5px 10px 8px}
   @keyframes scannerSwap{
     0%,38%{transform:rotate(-4deg) scale(0.93);z-index:1;filter:brightness(0.65) drop-shadow(0 15px 25px rgba(0,0,0,.6))}
     44%{z-index:3;transform:rotate(-4deg) scale(0.93);filter:brightness(0.65)}
