@@ -182,9 +182,9 @@
       <div class="ea-phones-wrap">
 
         <!-- Floating food detection tags -->
-        <div class="ea-food-tag" style="top:14%;left:-10%">Blueberries<b>8 kcal</b></div>
-        <div class="ea-food-tag" style="top:6%;right:-8%">Pancakes<b>595 kcal</b></div>
-        <div class="ea-food-tag" style="top:58%;left:-6%">Syrup<b>12 kcal</b></div>
+        <div class="ea-food-tag" style="top:14%;left:-10%">Palov<b>450 kcal</b></div>
+        <div class="ea-food-tag" style="top:6%;right:-8%">Go'sht<b>180 kcal</b></div>
+        <div class="ea-food-tag" style="top:58%;left:-6%">Sabzi<b>42 kcal</b></div>
 
         <!-- ── BACK PHONE: iPhone 15 Pro — Scanner ── -->
         <div class="iph iph-back">
@@ -217,6 +217,113 @@
                   </div>
                 </div>
                 <div class="iph-cam-view">
+                  <!-- Plov food scene -->
+                  <div class="iph-food-scene">
+                    <svg viewBox="0 0 220 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                      <defs>
+                        <radialGradient id="bgG" cx="50%" cy="60%">
+                          <stop offset="0%" stop-color="#2a1a0a"/>
+                          <stop offset="100%" stop-color="#100800"/>
+                        </radialGradient>
+                        <radialGradient id="plateG" cx="38%" cy="32%">
+                          <stop offset="0%" stop-color="#faf4e8"/>
+                          <stop offset="70%" stop-color="#eddfc8"/>
+                          <stop offset="100%" stop-color="#d8c8ac"/>
+                        </radialGradient>
+                        <radialGradient id="riceG" cx="42%" cy="38%">
+                          <stop offset="0%" stop-color="#e8b828"/>
+                          <stop offset="50%" stop-color="#c8901a"/>
+                          <stop offset="100%" stop-color="#a06810"/>
+                        </radialGradient>
+                        <filter id="glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                      </defs>
+                      <!-- Dark camera background -->
+                      <rect width="220" height="190" fill="url(#bgG)"/>
+                      <!-- Table wood texture lines -->
+                      <line x1="0" y1="40" x2="220" y2="55" stroke="#1e1206" stroke-width="8" opacity="0.5"/>
+                      <line x1="0" y1="100" x2="220" y2="118" stroke="#1e1206" stroke-width="10" opacity="0.4"/>
+                      <line x1="0" y1="158" x2="220" y2="170" stroke="#1e1206" stroke-width="7" opacity="0.35"/>
+                      <!-- Plate shadow -->
+                      <ellipse cx="111" cy="106" rx="88" ry="80" fill="rgba(0,0,0,0.55)"/>
+                      <!-- Plate rim -->
+                      <ellipse cx="110" cy="100" rx="86" ry="78" fill="url(#plateG)"/>
+                      <ellipse cx="110" cy="100" rx="86" ry="78" fill="none" stroke="#cbbfa0" stroke-width="2"/>
+                      <!-- Inner plate lip -->
+                      <ellipse cx="110" cy="100" rx="76" ry="68" fill="none" stroke="#d8c8a8" stroke-width="1.2" opacity="0.6"/>
+                      <!-- Rice mound -->
+                      <ellipse cx="110" cy="100" rx="74" ry="66" fill="url(#riceG)"/>
+                      <!-- Rice grain highlights — top left -->
+                      <ellipse cx="82" cy="62" rx="5.5" ry="2.2" fill="#f0dc80" opacity="0.85" transform="rotate(-22 82 62)"/>
+                      <ellipse cx="95" cy="57" rx="5" ry="2" fill="#f4e490" opacity="0.8" transform="rotate(18 95 57)"/>
+                      <ellipse cx="107" cy="60" rx="5.5" ry="2.2" fill="#ecd870" opacity="0.75" transform="rotate(-8 107 60)"/>
+                      <ellipse cx="120" cy="58" rx="5" ry="2" fill="#f0dc80" opacity="0.8" transform="rotate(28 120 58)"/>
+                      <ellipse cx="132" cy="64" rx="5" ry="2" fill="#e8cc60" opacity="0.7" transform="rotate(-15 132 64)"/>
+                      <!-- Rice grain highlights — right -->
+                      <ellipse cx="155" cy="80" rx="5" ry="2" fill="#f0dc80" opacity="0.75" transform="rotate(35 155 80)"/>
+                      <ellipse cx="162" cy="95" rx="5.5" ry="2.2" fill="#e8cc60" opacity="0.7" transform="rotate(-5 162 95)"/>
+                      <ellipse cx="158" cy="112" rx="5" ry="2" fill="#f4e490" opacity="0.75" transform="rotate(20 158 112)"/>
+                      <!-- Rice grain highlights — left -->
+                      <ellipse cx="58" cy="82" rx="5" ry="2" fill="#f0dc80" opacity="0.7" transform="rotate(-30 58 82)"/>
+                      <ellipse cx="52" cy="98" rx="5.5" ry="2.2" fill="#e8cc60" opacity="0.75" transform="rotate(10 52 98)"/>
+                      <ellipse cx="56" cy="114" rx="5" ry="2" fill="#f0dc80" opacity="0.7" transform="rotate(-18 56 114)"/>
+                      <!-- Rice grain highlights — bottom -->
+                      <ellipse cx="80" cy="140" rx="5.5" ry="2.2" fill="#e8cc60" opacity="0.7" transform="rotate(12 80 140)"/>
+                      <ellipse cx="97" cy="145" rx="5" ry="2" fill="#f0dc80" opacity="0.65" transform="rotate(-25 97 145)"/>
+                      <ellipse cx="113" cy="143" rx="5.5" ry="2.2" fill="#e4c858" opacity="0.7" transform="rotate(8 113 143)"/>
+                      <ellipse cx="130" cy="141" rx="5" ry="2" fill="#f0dc80" opacity="0.65" transform="rotate(-12 130 141)"/>
+                      <!-- More scattered grains for density -->
+                      <ellipse cx="70" cy="70" rx="4.5" ry="1.8" fill="#f4e490" opacity="0.65" transform="rotate(40 70 70)"/>
+                      <ellipse cx="145" cy="70" rx="4.5" ry="1.8" fill="#ecd870" opacity="0.6" transform="rotate(-35 145 70)"/>
+                      <ellipse cx="68" cy="128" rx="4.5" ry="1.8" fill="#f0dc80" opacity="0.65" transform="rotate(22 68 128)"/>
+                      <ellipse cx="148" cy="128" rx="4.5" ry="1.8" fill="#e8cc60" opacity="0.6" transform="rotate(-20 148 128)"/>
+                      <!-- CARROTS — orange elongated strips -->
+                      <!-- Carrot 1 — top left diagonal -->
+                      <rect x="63" y="74" width="52" height="11" rx="5" fill="#d45810" transform="rotate(-30 89 79)"/>
+                      <rect x="63" y="74" width="52" height="11" rx="5" fill="none" stroke="#e87030" stroke-width="0.8" opacity="0.5" transform="rotate(-30 89 79)"/>
+                      <!-- Carrot highlight -->
+                      <rect x="66" y="74" width="46" height="4" rx="3" fill="#f08040" opacity="0.4" transform="rotate(-30 89 74)"/>
+                      <!-- Carrot 2 — center right -->
+                      <rect x="108" y="108" width="48" height="10" rx="5" fill="#cc5010" transform="rotate(18 132 113)"/>
+                      <rect x="111" y="108" width="42" height="4" rx="3" fill="#e87030" opacity="0.4" transform="rotate(18 132 108)"/>
+                      <!-- Carrot 3 — bottom left -->
+                      <rect x="68" y="126" width="44" height="10" rx="5" fill="#d45810" transform="rotate(-8 90 131)"/>
+                      <rect x="70" y="126" width="38" height="4" rx="3" fill="#f08040" opacity="0.35" transform="rotate(-8 90 126)"/>
+                      <!-- MEAT CHUNKS — dark brown irregular pieces -->
+                      <!-- Meat 1 -->
+                      <ellipse cx="65" cy="108" rx="15" ry="12" fill="#3c1a06"/>
+                      <ellipse cx="63" cy="106" rx="15" ry="12" fill="#54240c"/>
+                      <ellipse cx="63" cy="104" rx="13" ry="10" fill="#622e12" opacity="0.9"/>
+                      <!-- Meat 2 -->
+                      <ellipse cx="148" cy="82" rx="13" ry="11" fill="#3c1a06"/>
+                      <ellipse cx="146" cy="80" rx="13" ry="11" fill="#54240c"/>
+                      <ellipse cx="146" cy="78" rx="11" ry="9" fill="#622e12" opacity="0.9"/>
+                      <!-- Meat 3 -->
+                      <ellipse cx="140" cy="128" rx="12" ry="10" fill="#3c1a06"/>
+                      <ellipse cx="138" cy="126" rx="12" ry="10" fill="#54240c"/>
+                      <ellipse cx="138" cy="124" rx="10" ry="8" fill="#622e12" opacity="0.9"/>
+                      <!-- GARLIC HEAD — white, center-ish -->
+                      <ellipse cx="106" cy="97" rx="16" ry="14" fill="#f0ece2" filter="url(#glow)"/>
+                      <ellipse cx="106" cy="97" rx="16" ry="14" fill="none" stroke="#d4ccbc" stroke-width="1.2"/>
+                      <!-- Garlic clove lines -->
+                      <path d="M99 91 Q106 84 113 91" fill="none" stroke="#c8c0b0" stroke-width="0.8"/>
+                      <path d="M97 97 Q106 104 115 97" fill="none" stroke="#c8c0b0" stroke-width="0.8"/>
+                      <line x1="106" y1="83" x2="106" y2="111" stroke="#d0c8b8" stroke-width="0.8" opacity="0.6"/>
+                      <line x1="90" y1="97" x2="122" y2="97" stroke="#d0c8b8" stroke-width="0.8" opacity="0.6"/>
+                      <!-- Green herbs dots — dill -->
+                      <circle cx="78" cy="78" r="2.5" fill="#3a7a1a"/>
+                      <circle cx="82" cy="74" r="1.8" fill="#4a8a22"/>
+                      <circle cx="74" cy="75" r="1.5" fill="#3a7a1a" opacity="0.8"/>
+                      <circle cx="136" cy="115" r="2.5" fill="#3a7a1a"/>
+                      <circle cx="140" cy="111" r="1.8" fill="#4a8a22"/>
+                      <circle cx="143" cy="116" r="1.5" fill="#3a7a1a" opacity="0.8"/>
+                      <circle cx="88" cy="135" r="2" fill="#4a8a22" opacity="0.9"/>
+                      <circle cx="92" cy="138" r="1.5" fill="#3a7a1a" opacity="0.8"/>
+                      <!-- Subtle steam wisps -->
+                      <path d="M100 55 Q103 48 100 41" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M113 52 Q116 45 113 38" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M126 57 Q129 50 126 43" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </div>
                   <!-- Corner frame brackets -->
                   <div class="iph-scan-frame">
                     <span class="iph-corner tl"></span>
