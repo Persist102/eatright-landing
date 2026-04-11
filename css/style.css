@@ -3105,6 +3105,292 @@ body[data-theme="light"] .fcat-title{color:#0d1f2d}
 .chat-send-btn:disabled{opacity:.4;cursor:not-allowed}
 
 /* =====================================================
+   iPHONE 15 PRO MOCKUP
+   ===================================================== */
+.iph{
+  position:absolute;
+}
+.iph-back{
+  width:210px;height:440px;
+  top:60px;left:20px;
+  z-index:1;
+  transform:rotate(-4deg);
+  filter:drop-shadow(0 40px 60px rgba(0,0,0,.5));
+}
+.iph-front{
+  width:220px;height:460px;
+  top:10px;right:10px;
+  z-index:2;
+  filter:drop-shadow(0 50px 70px rgba(34,212,143,.18)) drop-shadow(0 20px 40px rgba(0,0,0,.4));
+  animation:iphFloat 4s ease-in-out infinite;
+}
+@keyframes iphFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+.iph-frame{
+  width:100%;height:100%;
+  border-radius:44px;
+  background:linear-gradient(145deg,#4a4a4a,#2a2a2a,#1a1a1a);
+  padding:3px;
+  position:relative;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.15),
+    inset 0 -1px 0 rgba(0,0,0,.4),
+    0 0 0 1px rgba(255,255,255,.06);
+}
+.iph-frame-light{
+  background:linear-gradient(145deg,#c8c8c8,#a8a8a8,#909090);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 -1px 0 rgba(0,0,0,.2),
+    0 0 0 1px rgba(255,255,255,.15);
+}
+
+/* Side buttons */
+.iph-btn-vol-up,.iph-btn-vol-dn,.iph-btn-power{
+  position:absolute;
+  background:linear-gradient(90deg,#2a2a2a,#3a3a3a);
+  border-radius:2px;
+}
+.iph-frame-light .iph-btn-vol-up,
+.iph-frame-light .iph-btn-vol-dn,
+.iph-frame-light .iph-btn-power{
+  background:linear-gradient(90deg,#a0a0a0,#b8b8b8);
+}
+.iph-btn-vol-up{width:3px;height:30px;left:-3px;top:24%}
+.iph-btn-vol-dn{width:3px;height:30px;left:-3px;top:36%}
+.iph-btn-power{width:3px;height:44px;right:-3px;top:28%}
+
+.iph-screen{
+  width:100%;height:100%;
+  border-radius:41px;
+  background:#0d1f2d;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+.iph-screen-light{
+  background:#f0f7f4;
+}
+
+/* Dynamic Island */
+.iph-island{
+  position:absolute;
+  top:10px;left:50%;
+  transform:translateX(-50%);
+  width:88px;height:26px;
+  background:#000;
+  border-radius:20px;
+  z-index:10;
+  box-shadow:0 0 0 1px rgba(255,255,255,.06);
+}
+.iph-island-dark{background:#0d1f2d}
+
+/* Status bar */
+.iph-status{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 20px 4px;
+  flex-shrink:0;
+  position:relative;z-index:5;
+}
+.iph-status-dark{
+  padding:14px 20px 4px;
+}
+.iph-time{font-size:.68rem;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:-.3px}
+.iph-status-dark .iph-time{color:rgba(0,0,0,.8)}
+.iph-icons{display:flex;align-items:center;gap:5px}
+
+/* Scanner phone UI */
+.iph-scan-ui{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.iph-scan-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:4px 14px 8px;
+  font-size:.68rem;font-weight:700;color:#fff;
+  flex-shrink:0;
+}
+.iph-icon-btn{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+}
+
+.iph-cam-view{
+  flex:1;position:relative;overflow:hidden;
+  background:
+    linear-gradient(180deg,#1a0e06 0%,#4a2208 20%,#7a3b14 42%,#9a4e28 58%,#5a2a14 78%,#280e04 100%);
+}
+.iph-cam-view::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 52% 58%,rgba(200,130,45,.65) 0%,transparent 58%),
+    radial-gradient(ellipse 50% 35% at 38% 72%,rgba(150,75,40,.8) 0%,transparent 48%);
+}
+/* Blueberries */
+.iph-cam-view::after{
+  content:'';position:absolute;
+  top:28%;left:42%;
+  width:9px;height:9px;background:#1e1060;border-radius:50%;
+  box-shadow:12px -7px 0 5px #2d1b6e,-8px 10px 0 4px #1e1060,20px 3px 0 4px #2d1b6e,-16px -3px 0 3px #2a1a6a;
+}
+
+.iph-scan-frame{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:110px;height:110px;
+}
+.iph-corner{
+  position:absolute;width:18px;height:18px;
+  border-color:#22d48f;border-style:solid;
+}
+.iph-corner.tl{top:0;left:0;border-width:3px 0 0 3px;border-radius:4px 0 0 0}
+.iph-corner.tr{top:0;right:0;border-width:3px 3px 0 0;border-radius:0 4px 0 0}
+.iph-corner.bl{bottom:0;left:0;border-width:0 0 3px 3px;border-radius:0 0 0 4px}
+.iph-corner.br{bottom:0;right:0;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
+
+.iph-scan-line{
+  position:absolute;left:4px;right:4px;top:10%;
+  height:1.5px;
+  background:linear-gradient(90deg,transparent,#22d48f,transparent);
+  box-shadow:0 0 8px rgba(34,212,143,.6);
+  animation:scanMove 2s ease-in-out infinite;
+}
+@keyframes scanMove{
+  0%{top:8%}50%{top:88%}100%{top:8%}
+}
+
+.iph-scan-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px 14px;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(10px);
+  flex-shrink:0;
+  gap:8px;
+}
+.iph-mode-pill{
+  font-size:.5rem;font-weight:700;color:rgba(255,255,255,.45);
+  padding:3px 8px;border-radius:10px;
+}
+.iph-mode-pill.active{color:#22d48f;background:rgba(34,212,143,.12)}
+.iph-shutter{
+  width:44px;height:44px;border-radius:50%;
+  border:3px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.iph-shutter-inner{
+  width:34px;height:34px;border-radius:50%;
+  background:#fff;
+}
+.iph-gallery-thumb{
+  width:28px;height:28px;border-radius:7px;
+  background:linear-gradient(135deg,#5c3010,#8b4513);
+  border:1.5px solid rgba(255,255,255,.2);
+  flex-shrink:0;
+}
+
+/* ── APP UI (front phone) ── */
+.iph-app-header{
+  background:linear-gradient(180deg,#0d1f2d 0%,#132a40 100%);
+  padding:8px 12px 14px;
+  flex-shrink:0;
+}
+.iph-app-logo{
+  font-family:'Syne',sans-serif;
+  font-size:.78rem;font-weight:800;
+  color:#22d48f;text-align:center;
+  margin-bottom:6px;letter-spacing:-.3px;
+}
+.iph-week-row{
+  display:flex;justify-content:space-around;
+  margin-bottom:8px;
+}
+.iph-day{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  font-size:.45rem;font-weight:600;color:rgba(255,255,255,.4);
+}
+.iph-day span{
+  width:22px;height:26px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.58rem;font-weight:700;
+}
+.iph-day.today{color:rgba(255,255,255,.9)}
+.iph-day.today span{background:rgba(255,255,255,.2);color:#fff}
+
+.iph-ring-wrap{
+  display:flex;align-items:center;justify-content:center;
+  position:relative;margin:2px auto 6px;
+  width:90px;height:90px;
+}
+.iph-ring-txt{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;line-height:1.1;
+}
+.iph-ring-txt b{font-size:.88rem;font-weight:800;color:#fff;display:block}
+.iph-ring-txt small{font-size:.38rem;color:rgba(255,255,255,.5);font-weight:500}
+
+.iph-macros{
+  display:flex;justify-content:space-around;
+  background:rgba(255,255,255,.07);
+  border-radius:12px;padding:6px 4px;
+}
+.iph-macro{
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+}
+.iph-macro span{font-size:.65rem}
+.iph-macro b{font-size:.62rem;font-weight:800;color:#fff;line-height:1}
+.iph-macro small{font-size:.38rem;color:rgba(255,255,255,.4);font-weight:500}
+
+.iph-log{padding:8px 10px;flex:1;overflow:hidden}
+.iph-log-title{
+  font-size:.55rem;font-weight:700;color:rgba(13,31,45,.5);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;
+}
+.iph-food-card{
+  background:#fff;border-radius:14px;
+  display:flex;align-items:center;gap:8px;
+  padding:8px;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+.iph-food-img{
+  width:52px;height:52px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#5c3010,#9a4e28);
+}
+.iph-food-info{flex:1;min-width:0}
+.iph-food-name{font-size:.52rem;font-weight:700;color:#0d1f2d;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iph-food-cal{font-size:.75rem;font-weight:900;color:#0d1f2d;line-height:1}
+.iph-food-cal small{font-size:.42rem;color:#888;font-weight:500}
+.iph-food-macros{font-size:.42rem;color:#888;margin-top:2px}
+.iph-food-time{
+  font-size:.44rem;font-weight:700;
+  background:rgba(0,0,0,.06);
+  color:#666;padding:3px 6px;border-radius:6px;flex-shrink:0;
+}
+
+.iph-bottom-nav{
+  display:flex;align-items:center;justify-content:space-around;
+  padding:8px 16px 14px;
+  background:#fff;
+  border-top:1px solid rgba(0,0,0,.06);
+  flex-shrink:0;
+}
+.iph-nav-item{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+}
+.iph-nav-fab{
+  width:44px;height:44px;border-radius:50%;
+  background:#0d1f2d;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(13,31,45,.3);
+}
+
+/* Remove old phone styles conflict */
+.ea-phones-wrap .ea-phone{display:none}
+
+/* =====================================================
    SCROLL-REVEAL ANIMATIONS
    ===================================================== */
 .reveal{
