@@ -709,7 +709,7 @@ body[data-theme="light"] .burger{color:#0a1e2e}
 
 /* FOOTER SECTION */
 .tsla-footer-section{
-  text-align:center;padding:120px 24px;
+  text-align:center;padding:80px 24px 40px;
   border-top:1px solid var(--border);
   background:linear-gradient(0deg,rgba(17,33,45,.5),transparent);
 }
@@ -3541,9 +3541,9 @@ body[data-theme="light"] .fcat-title{color:#0d1f2d}
    ===================================================== */
 .site-footer{
   text-align:center;
-  padding:20px 16px 28px;
+  padding:16px 16px 24px;
   border-top:1px solid rgba(255,255,255,.06);
-  margin-top:24px;
+  margin-top:0;
 }
 .site-footer-links{
   display:flex;align-items:center;justify-content:center;
