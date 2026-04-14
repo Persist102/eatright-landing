@@ -1382,6 +1382,49 @@ body:not([data-theme="light"]) .ea-blob-3{opacity:.4}
 }
 
 /* Social proof badge */
+/* ── Free banner ─────────────────────────────────────── */
+.ea-free-banner{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:linear-gradient(135deg,rgba(232,80,26,.18),rgba(232,80,26,.08));
+  border:1px solid rgba(232,80,26,.4);
+  border-radius:100px;
+  padding:8px 18px 8px 12px;
+  font-size:.82rem;
+  color:rgba(255,255,255,.9);
+  width:fit-content;
+  cursor:pointer;
+  animation:freeBannerPulse 2.5s ease-in-out infinite;
+  margin-bottom:4px;
+}
+body[data-theme="light"] .ea-free-banner{
+  background:linear-gradient(135deg,rgba(232,80,26,.12),rgba(232,80,26,.05));
+  border-color:rgba(232,80,26,.35);
+  color:#b03010;
+}
+.ea-free-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#e8501a;
+  box-shadow:0 0 0 0 rgba(232,80,26,.5);
+  animation:dotPing 1.5s ease-in-out infinite;
+  flex-shrink:0;
+}
+.ea-free-arrow{
+  font-size:.9rem;
+  opacity:.7;
+  transition:transform .2s;
+}
+.ea-free-banner:hover .ea-free-arrow{transform:translateX(3px)}
+@keyframes freeBannerPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,80,26,0)}
+  50%{box-shadow:0 0 12px 2px rgba(232,80,26,.2)}
+}
+@keyframes dotPing{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,80,26,.5)}
+  50%{box-shadow:0 0 0 5px rgba(232,80,26,0)}
+}
+
 .ea-badge{
   display:inline-flex;
   align-items:center;
@@ -3621,10 +3664,11 @@ body[data-theme="light"] .fcat-title{color:#0d1f2d}
   opacity:0;
   animation:heroFadeUp .7s cubic-bezier(.22,1,.36,1) forwards;
 }
-.ea-hero-left > *:nth-child(1){animation-delay:.1s}
-.ea-hero-left > *:nth-child(2){animation-delay:.22s}
-.ea-hero-left > *:nth-child(3){animation-delay:.34s}
-.ea-hero-left > *:nth-child(4){animation-delay:.46s}
+.ea-hero-left > *:nth-child(1){animation-delay:.05s}
+.ea-hero-left > *:nth-child(2){animation-delay:.15s}
+.ea-hero-left > *:nth-child(3){animation-delay:.27s}
+.ea-hero-left > *:nth-child(4){animation-delay:.39s}
+.ea-hero-left > *:nth-child(5){animation-delay:.51s}
 @keyframes heroFadeUp{
   from{opacity:0;transform:translateY(24px)}
   to{opacity:1;transform:translateY(0)}
