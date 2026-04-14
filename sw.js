@@ -1,4 +1,4 @@
-const CACHE = 'eatright-v21';
+const CACHE = 'eatright-v25';
 const ASSETS = [
   '/',
   '/index.html',
