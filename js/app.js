@@ -1270,7 +1270,7 @@ async function sendChat() {
     const token = getToken();
     if (token) headers['Authorization'] = 'Bearer ' + token;
 
-    const res = await fetch('/api/support/chat', {
+    const res = await fetch('https://eatright-server-production.up.railway.app/api/support/chat', {
       method: 'POST',
       headers,
       body: JSON.stringify({ message: msg, history: chatHistory.slice(-10) })
