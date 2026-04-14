@@ -1395,7 +1395,8 @@ body:not([data-theme="light"]) .ea-blob-3{opacity:.4}
   color:rgba(255,255,255,.9);
   width:fit-content;
   cursor:pointer;
-  animation:freeBannerPulse 2.5s ease-in-out infinite;
+  opacity:1 !important;
+  animation:heroFadeUp .7s cubic-bezier(.22,1,.36,1) .05s both, freeBannerPulse 2.5s ease-in-out .75s infinite;
   margin-bottom:4px;
 }
 body[data-theme="light"] .ea-free-banner{
